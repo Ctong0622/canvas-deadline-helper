@@ -1,0 +1,12 @@
+/* Canvas Deadline Helper: highlight for assignments due within 7 days */
+/*
+ * !important is needed here: Canvas's own styles for ".ig-row" are
+ * injected into the page dynamically (after our stylesheet loads) and
+ * have the same CSS specificity as our single class selector, so
+ * without !important Canvas's styles would win and our highlight
+ * would never show up.
+ */
+.cdh-highlight {
+  background-color: #fffbe6 !important; /* subtle light yellow */
+  border-left: 4px solid #e8830c !important; /* small orange left border */
+}

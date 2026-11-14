@@ -26,6 +26,10 @@ console.log("Canvas Deadline Helper loaded");
 const DAYS_AHEAD_LIMIT = 7;
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
+// CSS class defined in styles.css that applies the light yellow
+// background and orange left border for assignments due soon.
+const HIGHLIGHT_CLASS = "cdh-highlight";
+
 // Finds every assignment row currently on the page.
 function getAssignmentRows() {
   return document.querySelectorAll(".ig-row");
@@ -72,6 +76,13 @@ function getDaysRemaining(dueDate) {
   return Math.ceil((dueDate.getTime() - now.getTime()) / MS_PER_DAY);
 }
 
+// True if an assignment is due today or within the next 7 days.
+// Negative values (already past due) and values beyond the limit are
+// both excluded.
+function isDueWithinSevenDays(daysRemaining) {
+  return daysRemaining >= 0 && daysRemaining <= DAYS_AHEAD_LIMIT;
+}
+
 // Scans the page and builds a list of assignments that have a valid
 // name and due date. Assignments without a valid due date are skipped
 // (not crashed on) and noted in the console. Rows are deduplicated by
@@ -101,6 +112,7 @@ function detectAssignments() {
     }
 
     assignments.push({
+      row: row,
       name: name,
       dueDate: dueDate,
       daysRemaining: getDaysRemaining(dueDate),
@@ -112,59 +124,83 @@ function detectAssignments() {
 
 // Prints every detected assignment to the console once, noting which
 // ones are due within the next 7 days.
-function logAssignments() {
-  const assignments = detectAssignments();
-
+function logAssignments(assignments) {
   if (assignments.length === 0) {
     console.log("Canvas Deadline Helper: no assignments with valid due dates were found on this page.");
     return;
   }
 
   assignments.forEach((assignment) => {
-    const dueWithinSevenDays =
-      assignment.daysRemaining >= 0 && assignment.daysRemaining <= DAYS_AHEAD_LIMIT;
     console.log(
-      `Canvas Deadline Helper: "${assignment.name}" | Due: ${assignment.dueDate.toLocaleString()} | Days remaining: ${assignment.daysRemaining} | Due within 7 days: ${dueWithinSevenDays}`
+      `Canvas Deadline Helper: "${assignment.name}" | Due: ${assignment.dueDate.toLocaleString()} | Days remaining: ${assignment.daysRemaining} | Due within 7 days: ${isDueWithinSevenDays(assignment.daysRemaining)}`
     );
   });
 }
 
+// Adds the highlight CSS class to rows due within the next 7 days.
+// Past-due assignments and ones further away are left untouched. Only
+// the class is added (a plain CSS class is all styles.css needs to
+// show the highlight) - no text, dates, or other content is changed.
+// Checking classList first avoids adding the class twice to the same
+// row if this ever runs more than once.
+function highlightUpcomingAssignments(assignments) {
+  assignments.forEach((assignment) => {
+    if (!isDueWithinSevenDays(assignment.daysRemaining)) {
+      return;
+    }
+    if (assignment.row.classList.contains(HIGHLIGHT_CLASS)) {
+      return; // Already highlighted, avoid duplicate work.
+    }
+    assignment.row.classList.add(HIGHLIGHT_CLASS);
+  });
+}
+
+// Detects assignments once, then logs and highlights them from that
+// same result, so the console output and the highlighted rows always
+// match each other.
+function runDeadlineHelper() {
+  const assignments = detectAssignments();
+  logAssignments(assignments);
+  highlightUpcomingAssignments(assignments);
+}
+
 // Canvas loads assignment rows, and then their due dates, with
 // JavaScript after the page first appears - sometimes in more than
-// one step. Instead of logging the moment a row shows up (which can
+// one step. Instead of running the moment a row shows up (which can
 // be before its due date has finished rendering), we wait until the
-// page stops changing for a short "quiet period" before detecting and
-// logging. We log only once (hasLogged), so re-render events on the
-// page never cause duplicate logging.
-let hasLogged = false;
+// page stops changing for a short "quiet period" before detecting,
+// logging, and highlighting. This only runs once (hasRun), so
+// re-render events on the page never cause duplicate logging or
+// duplicate highlighting.
+let hasRun = false;
 let settleTimer = null;
 
-function scheduleLogAssignments() {
-  if (hasLogged) {
+function scheduleRunDeadlineHelper() {
+  if (hasRun) {
     return;
   }
   clearTimeout(settleTimer);
   settleTimer = setTimeout(() => {
-    if (hasLogged) {
+    if (hasRun) {
       return;
     }
-    hasLogged = true;
+    hasRun = true;
     observer.disconnect();
-    logAssignments();
+    runDeadlineHelper();
   }, 500);
 }
 
-const observer = new MutationObserver(scheduleLogAssignments);
+const observer = new MutationObserver(scheduleRunDeadlineHelper);
 observer.observe(document.body, { childList: true, subtree: true });
 
 // In case the page is already fully rendered when this script runs.
-scheduleLogAssignments();
+scheduleRunDeadlineHelper();
 
-// Fallback: if the page never settles, still log after a maximum wait.
+// Fallback: if the page never settles, still run after a maximum wait.
 setTimeout(() => {
-  if (!hasLogged) {
-    hasLogged = true;
+  if (!hasRun) {
+    hasRun = true;
     observer.disconnect();
-    logAssignments();
+    runDeadlineHelper();
   }
 }, 10000);
