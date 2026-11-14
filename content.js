@@ -204,3 +204,31 @@ setTimeout(() => {
     runDeadlineHelper();
   }
 }, 10000);
+
+// ---- Popup support ----
+//
+// When the popup is opened, it asks this content script (via a
+// message) for the assignments due within the next 7 days. This
+// reuses detectAssignments() and isDueWithinSevenDays() - the exact
+// same detection logic used for logging and highlighting - instead
+// of detecting dates a second way. Dates are re-scanned fresh (rather
+// than reusing a cached result) so the popup always reflects what is
+// currently on the page.
+if (typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.onMessage) {
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (!message || message.type !== "CDH_GET_UPCOMING_ASSIGNMENTS") {
+      return;
+    }
+
+    const upcoming = detectAssignments()
+      .filter((assignment) => isDueWithinSevenDays(assignment.daysRemaining))
+      .sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime())
+      .map((assignment) => ({
+        name: assignment.name,
+        dueDate: assignment.dueDate.toISOString(),
+        daysRemaining: assignment.daysRemaining,
+      }));
+
+    sendResponse(upcoming);
+  });
+}
