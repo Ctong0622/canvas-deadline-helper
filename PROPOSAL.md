@@ -103,3 +103,17 @@ I also need to learn how Chrome extensions use content scripts, how the popup co
 Canvas pages may display assignments differently, so I will need to test the extension on real course pages and fix problems I find.
 
 My goal is to build a simple extension that works reliably before adding more features.
+
+## Final Implementation Update
+
+After building and testing the extension, I completed the three main features: deadline detection, deadline highlighting, and the assignment popup.
+
+The extension now highlights assignments due within the next 7 days and displays those assignments in a popup with their names, due dates, and days remaining.
+
+I originally planned to include an on/off switch and saved preferences, but I decided to focus on making the three core features work reliably on real Babson Canvas pages first. These two features were not implemented.
+
+During development, I also discovered that Canvas's actual HTML structure was different from what I expected. I used Chrome DevTools to inspect the page and worked with GitHub Copilot to fix the deadline detection, highlighting, and popup communication issues.
+
+I successfully tested the final extension on my own Babson Canvas Assignments page. Testing by another student has not yet been confirmed.
+
+Overall, the final version is simpler than my original plan, but the main deadline reminder features are working correctly.
