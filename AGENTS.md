@@ -40,3 +40,8 @@ Read `PROPOSAL.md` before writing any code. Follow the features and expected beh
 - Build one feature at a time.
 - Explain important code changes in simple English.
 - Do not add features without asking me first.
+
+## Final Scope Update
+The final version of this extension includes three working features: deadline detection, highlighting, and the assignment popup.
+
+The on/off switch and saved preferences were planned but not built. I chose to spend my time making sure the three main features worked well and reliably on real Babson Canvas pages instead.
