@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canvas Deadline Helper</title>
+<style>
+  :root {
+    --primary-color: #8b1d1d;
+    --text-color: #2b2b2b;
+    --bg-color: #ffffff;
+    --card-bg: #f7f7f7;
+    --border-color: #e0e0e0;
+    --max-width: 800px;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    line-height: 1.6;
+  }
+
+  header {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+  }
+
+  header h1 {
+    margin: 0 0 0.5rem 0;
+    font-size: 2rem;
+  }
+
+  header p {
+    margin: 0;
+    font-size: 1.1rem;
+    opacity: 0.95;
+  }
+
+  main {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem 1.5rem;
+  }
+
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  h2 {
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    font-size: 1.4rem;
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .feature-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+
+  .feature-card h3 {
+    margin-top: 0;
+    font-size: 1.05rem;
+    color: var(--primary-color);
+  }
+
+  .feature-card p {
+    margin-bottom: 0;
+    font-size: 0.95rem;
+  }
+
+  ol, ul {
+    padding-left: 1.3rem;
+  }
+
+  ol li, ul li {
+    margin-bottom: 0.6rem;
+  }
+
+  code {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+    font-size: 0.9em;
+  }
+
+  .button-link {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0.7rem 1.4rem;
+    border-radius: 6px;
+    font-weight: bold;
+  }
+
+  .button-link:hover {
+    opacity: 0.9;
+  }
+
+  .note {
+    background-color: var(--card-bg);
+    border-left: 4px solid var(--primary-color);
+    padding: 1rem 1.25rem;
+    border-radius: 4px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.85rem;
+    color: #666666;
+    border-top: 1px solid var(--border-color);
+  }
+
+  @media (max-width: 600px) {
+    header h1 {
+      font-size: 1.6rem;
+    }
+
+    .features {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Canvas Deadline Helper</h1>
+  <p>A simple Chrome extension that helps Babson students see upcoming assignment deadlines on Canvas.</p>
+</header>
+
+<main>
+  <section>
+    <h2>What It Does</h2>
+    <div class="features">
+      <div class="feature-card">
+        <h3>Deadline Detection</h3>
+        <p>Reads assignment names and due dates directly from supported Canvas assignment pages.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Highlighting</h3>
+        <p>Highlights assignments that are due within the next seven days, so they are easy to spot.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Popup List</h3>
+        <p>Shows all detected upcoming assignments in a popup window, sorted by deadline.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>How To Install</h2>
+    <ol>
+      <li>Go to the <a href="https://github.com/Ctong0622/canvas-deadline-helper">GitHub repository</a> and click the green <strong>Code</strong> button, then choose <strong>Download ZIP</strong>.</li>
+      <li>Unzip the downloaded file on your computer.</li>
+      <li>Open Chrome and go to <code>chrome://extensions</code>.</li>
+      <li>Turn on <strong>Developer mode</strong> using the toggle in the top right corner.</li>
+      <li>Click <strong>Load unpacked</strong>.</li>
+      <li>Select the unzipped folder that contains the <code>manifest.json</code> file.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>How To Use It</h2>
+    <p>
+      This extension works on supported Babson Canvas course <strong>Assignments</strong> pages.
+      You must be logged into Canvas for the extension to detect assignments and due dates.
+      Open an Assignments page for one of your courses, then click the extension icon to see
+      your upcoming deadlines in the popup.
+    </p>
+    <div class="note">
+      Note: This extension only reads information already shown on the page. It never modifies
+      or submits any Canvas assignments.
+    </div>
+  </section>
+
+  <section>
+    <h2>Source Code</h2>
+    <p>
+      This project is open source. View the code, report issues, or download it from the
+      GitHub repository below.
+    </p>
+    <a class="button-link" href="https://github.com/Ctong0622/canvas-deadline-helper">View on GitHub</a>
+  </section>
+</main>
+
+<footer>
+  Canvas Deadline Helper &mdash; Mini Project 4
+</footer>
+
+</body>
+</html>
