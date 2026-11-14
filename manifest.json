@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Canvas Deadline Helper",
+  "version": "0.1.0",
+  "description": "Helps Babson students see upcoming assignment deadlines on Canvas.",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://babson.instructure.com/courses/*/assignments*"],
+      "js": ["content.js"]
+    }
+  ]
+}
