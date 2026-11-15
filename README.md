@@ -91,3 +91,5 @@ The biggest thing I learned is that AI-generated code does not always work in re
 I think Copilot made the coding process much faster, especially because I did not have much experience building Chrome extensions. But my own testing and feedback were important in making the final version work.
 
 This project helped me understand how AI can support software development while still requiring human judgment and testing.
+
+## User test
