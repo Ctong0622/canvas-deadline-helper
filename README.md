@@ -93,3 +93,11 @@ I think Copilot made the coding process much faster, especially because I did no
 This project helped me understand how AI can support software development while still requiring human judgment and testing.
 
 ## User test
+
+I asked one of my classmates to test my Canvas Deadline Helper extension. At first, he was not sure how to install a Chrome extension manually, so I had to walk him through the steps. I actually had the same problem when I first learned how to install extensions in class, so I understood his confusion.
+
+After installing it, I gave him a quick explanation of how the extension works. It highlights upcoming assignment deadlines on Canvas and shows deadline information in a popup.
+
+Everything worked as expected, and he was able to use the extension without any problems after my explanation. No changes were needed.
+
+The main thing I learned from this test is that even if an extension works well, the installation process might not be easy for someone who has never done it before. Clear instructions are important for new users.
