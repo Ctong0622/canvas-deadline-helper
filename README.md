@@ -101,3 +101,5 @@ After installing it, I gave him a quick explanation of how the extension works. 
 Everything worked as expected, and he was able to use the extension without any problems after my explanation. No changes were needed.
 
 The main thing I learned from this test is that even if an extension works well, the installation process might not be easy for someone who has never done it before. Clear instructions are important for new users.
+
+**User test commit:** [View commit](https://github.com/Ctong0622/canvas-deadline-helper/commit/7d6dcb0)
